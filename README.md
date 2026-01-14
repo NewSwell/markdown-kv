@@ -96,12 +96,6 @@ Research has shown that Markdown-KV can be more effective than common formats li
 - 🔧 Type-safe APIs
 - 📝 Comprehensive documentation
 
-## Installation
-
-```bash
-npm install markdown-kv
-```
-
 ## Input Types
 
 The library supports the following input types for working with key-value pairs:
