@@ -22,7 +22,6 @@ Here's an example of Markdown-KV format:
 
 ## Record 1
 
-```
 id: 1
 name: Diana A0
 age: 46
@@ -31,11 +30,9 @@ department: Engineering
 salary: 141015
 years_experience: 7
 project_count: 17
-```
 
 ## Record 2
 
-```
 id: 2
 name: Grace B1
 age: 59
@@ -44,11 +41,9 @@ department: Engineering
 salary: 100066
 years_experience: 11
 project_count: 32
-```
 
 ## Record 3
 
-```
 id: 3
 name: Grace C2
 age: 64
@@ -58,7 +53,7 @@ salary: 91727
 years_experience: 9
 project_count: 49
 ```
-```
+
 
 This structure provides:
 - **Clear hierarchy**: Headers organize records into logical groups
