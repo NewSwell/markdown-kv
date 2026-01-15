@@ -100,7 +100,9 @@ export const emptyShallowObject: ShallowObject = {};
  * Edge case test data - single item arrays
  */
 export const singleKeyValuePair: KeyValuePair[] = [['key', 'value']];
-export const singleObjectCollection: Collection = [{ name: 'Single User', age: 25 }];
+export const singleObjectCollection: Collection = [
+  { name: 'Single User', age: 25 },
+];
 
 /**
  * Edge case test data - all null values

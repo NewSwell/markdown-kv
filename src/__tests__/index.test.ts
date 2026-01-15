@@ -215,14 +215,18 @@ describe('stringify', () => {
     });
 
     it('should drop undefined values', () => {
-      const data: Record<string, string | number | boolean | null | undefined> = {
-        name: 'John',
-        age: 30,
-        email: undefined,
-      };
-      const result = stringify(data as Record<string, string | number | boolean | null>, {
-        drop: [undefined],
-      });
+      const data: Record<string, string | number | boolean | null | undefined> =
+        {
+          name: 'John',
+          age: 30,
+          email: undefined,
+        };
+      const result = stringify(
+        data as Record<string, string | number | boolean | null>,
+        {
+          drop: [undefined],
+        }
+      );
       expect(result).toContain('name: John');
       expect(result).toContain('age: 30');
       expect(result).not.toContain('email');
@@ -246,7 +250,12 @@ describe('stringify', () => {
     });
 
     it('should drop any matching string value', () => {
-      const data = { status: 'pending', name: 'John', status2: 'pending', status3: 'active' };
+      const data = {
+        status: 'pending',
+        name: 'John',
+        status2: 'pending',
+        status3: 'active',
+      };
       const result = stringify(data, { drop: ['pending'] });
       expect(result).toContain('name: John');
       expect(result).toContain('status3: active');
@@ -300,7 +309,10 @@ describe('stringify', () => {
   describe('combined options', () => {
     it('should combine name and drop options', () => {
       const data = { name: 'John', email: '', middleName: null };
-      const result = stringify(data, { name: 'User Profile', drop: [null, ''] });
+      const result = stringify(data, {
+        name: 'User Profile',
+        drop: [null, ''],
+      });
       expect(result).toContain('# User Profile');
       expect(result).toContain('name: John');
       expect(result).not.toContain('email');
@@ -345,7 +357,10 @@ describe('stringify', () => {
     });
 
     it('should handle special characters in keys and values', () => {
-      const data = { 'key:with:colons': 'value with spaces', 'key-with-dashes': 'value' };
+      const data = {
+        'key:with:colons': 'value with spaces',
+        'key-with-dashes': 'value',
+      };
       const result = stringify(data);
       expect(result).toContain('key:with:colons: value with spaces');
       expect(result).toContain('key-with-dashes: value');

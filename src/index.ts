@@ -68,14 +68,14 @@ function normalizeInput(
     !Array.isArray(data[0]) &&
     data[0] !== null
   ) {
-    return (data as Array<Record<string, string | number | boolean | null>>).map(
-      (obj) => Object.entries(obj)
-    );
+    return (
+      data as Array<Record<string, string | number | boolean | null>>
+    ).map((obj) => Object.entries(obj));
   }
 
   // Single object - convert to key-value pairs and wrap in array
   if (typeof data === 'object' && data !== null && !Array.isArray(data)) {
-    return [Object.entries(data as Record<string, string | number | boolean | null>)];
+    return [Object.entries(data)];
   }
 
   // Empty array - return empty records
