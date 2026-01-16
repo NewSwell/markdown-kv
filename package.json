@@ -1,6 +1,6 @@
 {
   "name": "markdown-kv",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A TypeScript library for working with markdown key-value pairs",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -30,7 +30,7 @@
     "lint:fix": "eslint src --ext .ts --fix",
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\"",
-    "prepublishOnly": "npm run build"
+    "prepare": "npm run build"
   },
   "keywords": [
     "typescript",
