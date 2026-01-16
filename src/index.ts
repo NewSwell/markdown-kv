@@ -127,7 +127,7 @@ function generateMarkdown(
   records.forEach((record, index) => {
     // Add record header (only if multiple records)
     if (records.length > 1) {
-      parts.push(`## Record ${index + 1}\n`);
+      parts.push(`\n## Record ${index + 1}\n`);
     }
 
     // Add key-value pairs
