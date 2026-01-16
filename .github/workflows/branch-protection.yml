@@ -1,0 +1,49 @@
+name: Branch Protection
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  ensure-pr-from-develop:
+    name: Ensure PR to main is from develop
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify PR is from develop branch
+        run: |
+          PR_BASE="${{ github.base_ref }}"
+          PR_HEAD="${{ github.head_ref }}"
+          
+          if [ "$PR_BASE" != "main" ]; then
+            echo "This workflow only checks PRs to main. Skipping."
+            exit 0
+          fi
+          
+          # Check if the PR is merging develop into main
+          if [ "$PR_HEAD" != "develop" ]; then
+            echo "❌ Error: Pull requests to main must come from the 'develop' branch."
+            echo "Current PR is from: $PR_HEAD"
+            echo "Please create a pull request from 'develop' to 'main' instead."
+            exit 1
+          fi
+          
+          echo "✅ PR is correctly from develop branch"
+
+      - name: Ensure develop is up to date
+        run: |
+          git fetch origin develop main
+          
+          # Check if main has commits not in develop (shouldn't happen in normal flow)
+          MAIN_AHEAD=$(git rev-list --count origin/develop..origin/main || echo "0")
+          if [ "$MAIN_AHEAD" -gt "0" ]; then
+            echo "⚠️  Warning: main has $MAIN_AHEAD commit(s) not in develop."
+            echo "This may indicate main was updated without going through develop first."
+          fi
+          
+          echo "✅ Branch status verified"

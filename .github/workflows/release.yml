@@ -16,11 +16,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Ensure main is up to date with develop
+        run: |
+          git fetch origin develop main
+          
+          # Check if develop has commits not in main
+          DEVELOP_AHEAD=$(git rev-list --count origin/main..origin/develop || echo "0")
+          if [ "$DEVELOP_AHEAD" -gt "0" ]; then
+            echo "❌ Error: develop branch has $DEVELOP_AHEAD commit(s) that are not in main."
+            echo "Please merge develop into main before creating a release."
+            exit 1
+          fi
+          
+          echo "✅ main is up to date with develop"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
       - name: Install dependencies
@@ -32,3 +45,14 @@ jobs:
       - name: Run tests
         run: npm run test
 
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: |
+            See [CHANGELOG.md](CHANGELOG.md) for details.
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

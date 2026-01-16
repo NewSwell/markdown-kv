@@ -10,7 +10,7 @@ A TypeScript library for working with markdown key-value pairs.
 
 Markdown-KV uses a hierarchical structure where:
 - Each record is introduced with a Markdown header (typically `## Record N` or similar)
-- The key-value pairs for each record are contained within a code block (using triple backticks)
+- The key-value pairs for each record follow the header
 - Each key-value pair is written as `key: value` on separate lines
 
 ### Example
@@ -21,7 +21,6 @@ Here's an example of Markdown-KV format:
 # Employee Database
 
 ## Record 1
-
 id: 1
 name: Diana A0
 age: 46
@@ -32,7 +31,6 @@ years_experience: 7
 project_count: 17
 
 ## Record 2
-
 id: 2
 name: Grace B1
 age: 59
@@ -43,7 +41,6 @@ years_experience: 11
 project_count: 32
 
 ## Record 3
-
 id: 3
 name: Grace C2
 age: 64
@@ -155,12 +152,10 @@ const data = {
 const markdown = stringify(data);
 console.log(markdown);
 // Output:
-// ```
 // name: John Doe
 // email: john@example.com
 // age: 30
 // active: true
-// ```
 ```
 
 ### With Options
@@ -176,10 +171,8 @@ console.log(markdown);
 // Output:
 // # User Profile
 //
-// ```
 // name: John
 // age: 30
-// ```
 ```
 
 #### Filtering Values with `drop` Option
@@ -203,11 +196,9 @@ const data = {
 const markdown = stringify(data, { drop: [null, ''] });
 console.log(markdown);
 // Output:
-// ```
 // name: John
 // active: false
 // age: 30
-// ```
 
 // Use the preset constant for common falsy values
 const markdown2 = stringify(data, { drop: DROP_FALSY });
@@ -232,10 +223,8 @@ const markdown = stringify(data, {
 });
 console.log(markdown);
 // Output:
-// ```
 // name: John
 // age: 30
-// ```
 ```
 
 **Dropping specific string values:**
@@ -254,10 +243,8 @@ const data = {
 const markdown = stringify(data, { drop: ['pending'] });
 console.log(markdown);
 // Output:
-// ```
 // name: John
 // status3: active
-// ```
 ```
 
 ### Working with Collections
@@ -279,28 +266,19 @@ console.log(markdown);
 // # Users
 //
 // ## Record 1
-//
-// ```
 // name: John Doe
 // age: 30
 // email: john@example.com
-// ```
 //
 // ## Record 2
-//
-// ```
 // name: Jane Smith
 // age: 28
 // email: jane@example.com
-// ```
 //
 // ## Record 3
-//
-// ```
 // name: Bob Johnson
 // age: 35
 // email: bob@example.com
-// ```
 ```
 
 ### Using Array of Key-Value Pairs
@@ -320,12 +298,10 @@ const data = [
 const markdown = stringify(data);
 console.log(markdown);
 // Output:
-// ```
 // name: John Doe
 // email: john@example.com
 // age: 30
 // active: true
-// ```
 ```
 
 ### TypeScript Types
@@ -410,6 +386,31 @@ npm run lint
 # Format code
 npm run format
 ```
+
+### Release Process
+
+The project uses an automated release process via GitHub Actions. To create a new release:
+
+1. **Update the CHANGELOG.md** with the changes for the new version
+2. **Bump the version** using one of the following commands:
+   - `npm run release:patch` - for bug fixes (0.1.1 → 0.1.2)
+   - `npm run release:minor` - for new features (0.1.1 → 0.2.0)
+   - `npm run release:major` - for breaking changes (0.1.1 → 1.0.0)
+
+   These commands will:
+   - Update the version in `package.json`
+   - Build the project
+   - Create a git commit
+   - Create a git tag
+
+3. **Push the tag** to trigger the release workflow:
+   ```bash
+   git push origin main --tags
+   ```
+
+4. **The GitHub Actions workflow will automatically**:
+   - Build and test the project
+   - Create a GitHub Release
 
 ## Project Structure
 
