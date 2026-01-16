@@ -130,12 +130,10 @@ function generateMarkdown(
       parts.push(`## Record ${index + 1}\n`);
     }
 
-    // Add code block with key-value pairs
-    parts.push('```\n');
+    // Add key-value pairs
     record.forEach(([key, value]) => {
       parts.push(`${key}: ${formatValue(value)}\n`);
     });
-    parts.push('```\n');
   });
 
   return parts.join('');

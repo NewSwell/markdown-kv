@@ -67,7 +67,6 @@ describe('stringify', () => {
     it('should handle single key-value pair', () => {
       const result = stringify(singleKeyValuePair);
       expect(result).toContain('key: value');
-      expect(result).toContain('```');
     });
 
     it('should handle all null values', () => {
@@ -377,10 +376,8 @@ describe('stringify', () => {
   describe('format validation', () => {
     it('should produce valid markdown-kv format for single record', () => {
       const result = stringify({ name: 'John', age: 30 });
-      expect(result).toContain('```');
       expect(result).toContain('name: John');
       expect(result).toContain('age: 30');
-      expect(result.split('```').length).toBe(3); // Opening, content, closing
     });
 
     it('should produce valid markdown-kv format for multiple records', () => {
@@ -390,13 +387,13 @@ describe('stringify', () => {
       ]);
       expect(result).toContain('## Record 1');
       expect(result).toContain('## Record 2');
-      expect(result.match(/```/g)?.length).toBe(4); // Two code blocks (opening + closing each)
     });
 
     it('should produce valid markdown-kv format with header', () => {
       const result = stringify({ name: 'John', age: 30 }, { name: 'Profile' });
       expect(result.startsWith('# Profile')).toBe(true);
-      expect(result).toContain('```');
+      expect(result).toContain('name: John');
+      expect(result).toContain('age: 30');
     });
   });
 });
