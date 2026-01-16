@@ -387,6 +387,31 @@ npm run lint
 npm run format
 ```
 
+### Release Process
+
+The project uses an automated release process via GitHub Actions. To create a new release:
+
+1. **Update the CHANGELOG.md** with the changes for the new version
+2. **Bump the version** using one of the following commands:
+   - `npm run release:patch` - for bug fixes (0.1.1 → 0.1.2)
+   - `npm run release:minor` - for new features (0.1.1 → 0.2.0)
+   - `npm run release:major` - for breaking changes (0.1.1 → 1.0.0)
+
+   These commands will:
+   - Update the version in `package.json`
+   - Build the project
+   - Create a git commit
+   - Create a git tag
+
+3. **Push the tag** to trigger the release workflow:
+   ```bash
+   git push origin main --tags
+   ```
+
+4. **The GitHub Actions workflow will automatically**:
+   - Build and test the project
+   - Create a GitHub Release
+
 ## Project Structure
 
 ```
